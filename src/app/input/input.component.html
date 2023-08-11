@@ -1,0 +1,135 @@
+<div class="center">
+    <h1>Maal Hisab</h1>
+    <span>Number of players </span>
+    <input col-xs-2 
+        type="text"
+        placeholder=""
+        #numberOfPlayers
+    >
+    <button type="button" class="btn btn-success"  (click)="inputNumberOfPlayers(numberOfPlayers.value)">OK</button>
+</div>
+
+<br><br>
+<div *ngIf="totalPlayers > 0" class="container" width="50%">
+    <table table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    Maal
+                </td>
+                <td>
+                    Seen
+                </td>
+                <td>
+                    Winner
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf= "totalPlayers > 0">
+                <td>
+                    <input #player1 type="text" placeholder="Enter player name">
+                </td>
+                <td>
+                    <input #maal1 type="text" placeholder="Enter player maal">
+                </td>
+                <td>
+                    <input #seenBox1 type="checkbox" >
+                </td>
+                <td>
+                    <input #winBox1 type="checkbox" (change)="checkBoxChanged(1)">
+                </td>
+            </tr>
+            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=2">
+                <td>
+                    <input #player2 type="text" placeholder="Enter player name">
+                </td>
+                <td>
+                    <input #maal2 type="text" placeholder="Enter player maal">
+                </td>
+                <td>
+                    <input #seenBox2 type="checkbox" >
+                </td>
+                <td>
+                    <input #winBox2 type="checkbox" (change)="checkBoxChanged(2)">
+                </td>
+            </tr>
+            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=3">
+                <td>
+                    <input #player3 type="text" placeholder="Enter player name">
+                </td>
+                <td>
+                    <input #maal3 type="text" placeholder="Enter player maal">
+                </td>
+                <td>
+                    <input #seenBox3 type="checkbox" >
+                </td>
+                <td>
+                    <input #winBox3 type="checkbox" (change)="checkBoxChanged(3)">
+                </td>
+            </tr>
+            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=4">
+                <td>
+                    <input #player4 type="text" placeholder="Enter player name">
+                </td>
+                <td>
+                    <input #maal4 type="text" placeholder="Enter player maal">
+                </td>
+                <td>
+                    <input #seenBox4 type="checkbox" >
+                </td>
+                <td>
+                    <input #winBox4 type="checkbox" (change)="checkBoxChanged(4)">
+                </td>
+            </tr>
+            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=5">
+                <td>
+                    <input #player5 type="text" placeholder="Enter player name">
+                </td>
+                <td>
+                    <input #maal5 type="text" placeholder="Enter player maal">
+                </td>
+                <td>
+                    <input #seenBox5 type="checkbox" >
+                </td>
+                <td>
+                    <input #winBox5 type="checkbox" (change)="checkBoxChanged(5)">
+                </td>
+            </tr>
+            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=6">
+                <td>
+                    <input #player6 type="text" placeholder="Enter player name">
+                </td>
+                <td>
+                    <input #maal6 type="text" placeholder="Enter player maal">
+                </td>
+                <td>
+                    <input #seenBox6 type="checkbox" >
+                </td>
+                <td>
+                    <input #winBox6 type="checkbox" (change)="checkBoxChanged(6)">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button type="button" class="btn btn-success" (click)="setPoints()">Calculate</button>
+                </td>
+            </tr>
+        </tbody>
+        
+    
+    </table>
+</div>
+<div class="container" width="50%">
+    <app-points 
+        [allPoints]="pointsToAndFrom"
+        [winner]="winner"
+    ></app-points>
+</div>
+
