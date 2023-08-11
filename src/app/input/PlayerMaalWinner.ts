@@ -1,13 +1,15 @@
 export class PlayerMaalWinner{
     private _player: string;
     private _maal: number;
-    private _seen: boolean
+    private _seen: boolean;
+    private _dublee: boolean;
     private _winner: boolean;
 
-    constructor(player: string, maal:number, seen: boolean, winner: boolean) {
+    constructor(player: string, maal:number, seen: boolean, dublee: boolean, winner: boolean) {
         this._player = player;
         this._maal = maal;
         this._seen = seen;
+        this._dublee = dublee;
         this._winner = winner;
     }
 
@@ -37,6 +39,12 @@ export class PlayerMaalWinner{
     }
     public set seen(seen: boolean) {
         this._seen = seen;
+    }
+    public get dublee(): boolean{
+        return this._dublee;
+    }
+    public set dublee(dublee: boolean) {
+        this._dublee = dublee;
     }
 
 }

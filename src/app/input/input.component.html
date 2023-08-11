@@ -24,6 +24,9 @@
                     Seen
                 </td>
                 <td>
+                    Dublee
+                </td>
+                <td>
                     Winner
                 </td>
             </tr>
@@ -37,7 +40,10 @@
                     <input #maal1 type="text" placeholder="Enter player maal">
                 </td>
                 <td>
-                    <input #seenBox1 type="checkbox" >
+                    <input #seenBox1 type="checkbox" (change)="seenDublee(1)">
+                </td>
+                <td>
+                    <input #dubleeBox1 type="checkbox" disabled="true" >
                 </td>
                 <td>
                     <input #winBox1 type="checkbox" (change)="checkBoxChanged(1)">
@@ -51,7 +57,10 @@
                     <input #maal2 type="text" placeholder="Enter player maal">
                 </td>
                 <td>
-                    <input #seenBox2 type="checkbox" >
+                    <input #seenBox2 type="checkbox" (change)="seenDublee(2)">
+                </td>
+                <td>
+                    <input #dubleeBox2 type="checkbox" disabled="true">
                 </td>
                 <td>
                     <input #winBox2 type="checkbox" (change)="checkBoxChanged(2)">
@@ -65,7 +74,10 @@
                     <input #maal3 type="text" placeholder="Enter player maal">
                 </td>
                 <td>
-                    <input #seenBox3 type="checkbox" >
+                    <input #seenBox3 type="checkbox" (change)="seenDublee(3)">
+                </td>
+                <td>
+                    <input #dubleeBox3 type="checkbox" disabled="true">
                 </td>
                 <td>
                     <input #winBox3 type="checkbox" (change)="checkBoxChanged(3)">
@@ -79,7 +91,10 @@
                     <input #maal4 type="text" placeholder="Enter player maal">
                 </td>
                 <td>
-                    <input #seenBox4 type="checkbox" >
+                    <input #seenBox4 type="checkbox" (change)="seenDublee(4)">
+                </td>
+                <td>
+                    <input #dubleeBox4 type="checkbox" disabled="true">
                 </td>
                 <td>
                     <input #winBox4 type="checkbox" (change)="checkBoxChanged(4)">
@@ -93,7 +108,10 @@
                     <input #maal5 type="text" placeholder="Enter player maal">
                 </td>
                 <td>
-                    <input #seenBox5 type="checkbox" >
+                    <input #seenBox5 type="checkbox" (change)="seenDublee(5)">
+                </td>
+                <td>
+                    <input #dubleeBox5 type="checkbox" disabled="true">
                 </td>
                 <td>
                     <input #winBox5 type="checkbox" (change)="checkBoxChanged(5)">
@@ -107,7 +125,10 @@
                     <input #maal6 type="text" placeholder="Enter player maal">
                 </td>
                 <td>
-                    <input #seenBox6 type="checkbox" >
+                    <input #seenBox6 type="checkbox" (change)="seenDublee(6)">
+                </td>
+                <td>
+                    <input #dubleeBox6 type="checkbox" disabled="true">
                 </td>
                 <td>
                     <input #winBox6 type="checkbox" (change)="checkBoxChanged(6)">
@@ -117,6 +138,9 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td>
+                    <button type="button" class="btn btn-success" (click)="resetMaalSeen()">Reset</button>
+                </td>
                 <td>
                     <button type="button" class="btn btn-success" (click)="setPoints()">Calculate</button>
                 </td>
