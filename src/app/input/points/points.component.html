@@ -1,12 +1,21 @@
 <div *ngIf="allPoints.length > 0">
-    <h3>Result</h3>
-    <div class="card" style="width: 18rem;">
+  <h3>Result</h3>
+  <div class="parent">
+      <div class="card child" style="width: 18rem;">
         <div class="card-header">
-            Winner: {{winner}}
+          Winner This Round: {{winner}}
         </div>
         <ul *ngFor="let point of allPoints" class="list-group list-group-flush">
           <li class="list-group-item">{{point}}</li>
         </ul>
       </div>
+      <div class="card child" style="width: 18rem;">
+        <div class="card-header">
+          Total Winnings
+        </div>
+        <ul *ngFor="let hisab of totalHisab" class="list-group list-group-flush">
+          <li class="list-group-item">{{hisab}}</li>
+        </ul>
+    </div>
+  </div>
 </div>
-

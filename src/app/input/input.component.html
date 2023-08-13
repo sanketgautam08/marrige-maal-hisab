@@ -1,15 +1,23 @@
 <div class="center">
     <h1>Maal Hisab</h1>
-    <span>Number of players </span>
-    <input col-xs-2 
-        type="text"
-        placeholder=""
-        #numberOfPlayers
-    >
-    <button type="button" class="btn btn-success"  (click)="inputNumberOfPlayers(numberOfPlayers.value)">OK</button>
+    <div class="parent">
+        <div class="child">
+            <span>Number of players </span>
+            <input col-xs-2 type="text" placeholder="" (keydown.enter)="inputNumberOfPlayers(numberOfPlayers.value, gamePoint.value)"
+                #numberOfPlayers>
+        </div>
+        <div class="child">
+            <span>Game point </span>
+            <input col-xs-2 type="text" placeholder="" (keydown.enter)="inputNumberOfPlayers(numberOfPlayers.value, gamePoint.value)"
+                #gamePoint>
+        </div>
+        
+    </div>
+    <button type="button" class="btn btn-success btn" (click)="inputNumberOfPlayers(numberOfPlayers.value, gamePoint.value)">OK</button>
+
 </div>
 
-<br><br>
+<br>
 <div *ngIf="totalPlayers > 0" class="container" width="50%">
     <table table class="table table-striped">
         <thead class="table-dark">
@@ -32,29 +40,29 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngIf= "totalPlayers > 0">
+            <tr *ngIf="totalPlayers > 0">
                 <td>
                     <input #player1 type="text" placeholder="Enter player name">
                 </td>
                 <td>
-                    <input #maal1 type="text" placeholder="Enter player maal">
+                    <input #maal1 type="text" (change)="maalCheck(maal1.value, 1)" placeholder="Enter player maal">
                 </td>
                 <td>
                     <input #seenBox1 type="checkbox" (change)="seenDublee(1)">
                 </td>
                 <td>
-                    <input #dubleeBox1 type="checkbox" disabled="true" >
+                    <input #dubleeBox1 type="checkbox" disabled="true">
                 </td>
                 <td>
                     <input #winBox1 type="checkbox" (change)="checkBoxChanged(1)">
                 </td>
             </tr>
-            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=2">
+            <tr *ngIf="totalPlayers > 0 && totalPlayers >=2">
                 <td>
                     <input #player2 type="text" placeholder="Enter player name">
                 </td>
                 <td>
-                    <input #maal2 type="text" placeholder="Enter player maal">
+                    <input #maal2 type="text" (change)="maalCheck(maal2.value, 2)" placeholder="Enter player maal">
                 </td>
                 <td>
                     <input #seenBox2 type="checkbox" (change)="seenDublee(2)">
@@ -66,12 +74,12 @@
                     <input #winBox2 type="checkbox" (change)="checkBoxChanged(2)">
                 </td>
             </tr>
-            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=3">
+            <tr *ngIf="totalPlayers > 0 && totalPlayers >=3">
                 <td>
                     <input #player3 type="text" placeholder="Enter player name">
                 </td>
                 <td>
-                    <input #maal3 type="text" placeholder="Enter player maal">
+                    <input #maal3 type="text" (change)="maalCheck(maal3.value, 3)" placeholder="Enter player maal">
                 </td>
                 <td>
                     <input #seenBox3 type="checkbox" (change)="seenDublee(3)">
@@ -83,12 +91,12 @@
                     <input #winBox3 type="checkbox" (change)="checkBoxChanged(3)">
                 </td>
             </tr>
-            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=4">
+            <tr *ngIf="totalPlayers > 0 && totalPlayers >=4">
                 <td>
                     <input #player4 type="text" placeholder="Enter player name">
                 </td>
                 <td>
-                    <input #maal4 type="text" placeholder="Enter player maal">
+                    <input #maal4 type="text" (change)="maalCheck(maal4.value, 4)" placeholder="Enter player maal">
                 </td>
                 <td>
                     <input #seenBox4 type="checkbox" (change)="seenDublee(4)">
@@ -100,12 +108,12 @@
                     <input #winBox4 type="checkbox" (change)="checkBoxChanged(4)">
                 </td>
             </tr>
-            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=5">
+            <tr *ngIf="totalPlayers > 0 && totalPlayers >=5">
                 <td>
                     <input #player5 type="text" placeholder="Enter player name">
                 </td>
                 <td>
-                    <input #maal5 type="text" placeholder="Enter player maal">
+                    <input #maal5 type="text" (change)="maalCheck(maal5.value, 5)" placeholder="Enter player maal">
                 </td>
                 <td>
                     <input #seenBox5 type="checkbox" (change)="seenDublee(5)">
@@ -117,12 +125,12 @@
                     <input #winBox5 type="checkbox" (change)="checkBoxChanged(5)">
                 </td>
             </tr>
-            <tr *ngIf= "totalPlayers > 0 && totalPlayers >=6">
+            <tr *ngIf="totalPlayers > 0 && totalPlayers >=6">
                 <td>
                     <input #player6 type="text" placeholder="Enter player name">
                 </td>
                 <td>
-                    <input #maal6 type="text" placeholder="Enter player maal">
+                    <input #maal6 type="text" (change)="maalCheck(maal6.value, 6)" placeholder="Enter player maal">
                 </td>
                 <td>
                     <input #seenBox6 type="checkbox" (change)="seenDublee(6)">
@@ -139,21 +147,17 @@
                 <td></td>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-success" (click)="resetMaalSeen()">Reset</button>
+                    <button type="button" class="btn btn-danger" (click)="resetMaalSeen()">Reset</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-success" (click)="setPoints()">Calculate</button>
                 </td>
             </tr>
         </tbody>
-        
-    
+
     </table>
 </div>
-<div class="container" width="50%">
-    <app-points 
-        [allPoints]="pointsToAndFrom"
-        [winner]="winner"
-    ></app-points>
-</div>
 
+<div class="container" width="50%">
+    <app-points [allPoints]="pointsToAndFrom" [winner]="winner" [totalHisab]="totalHisab"></app-points>
+</div>

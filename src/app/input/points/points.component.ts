@@ -8,17 +8,8 @@ import { PlayerMaalWinner } from '../PlayerMaalWinner';
 })
 export class PointsComponent {
 
-  @Input() allPoints: string [] = [];
-  @Input() winner: string = ""; 
-
-
-  // showResult(){
-  //   for(var pmw of this.playerMaalWinner){
-  //     if(pmw.winner){
-  //       this.winner = pmw.player;
-  //     }
-  //   }
-  // }
-
+  @Input() allPoints: string[] = [];
+  @Input() winner: string = "";
+  @Input() totalHisab: string[] = [];
 
 }

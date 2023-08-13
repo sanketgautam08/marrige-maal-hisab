@@ -8,8 +8,6 @@ import { PlayerMaalWinner } from './PlayerMaalWinner';
 })
 export class InputComponent {
 
-  totalPlayers: number = 0;
-
   @ViewChild('winBox1') win1?: ElementRef["nativeElement"];
   @ViewChild('winBox2') win2?: ElementRef["nativeElement"];
   @ViewChild('winBox3') win3?: ElementRef["nativeElement"];
@@ -45,118 +43,85 @@ export class InputComponent {
   @ViewChild('maal5') maal5?: ElementRef["nativeElement"];
   @ViewChild('maal6') maal6?: ElementRef["nativeElement"];
 
+
   playerMaalWinner: PlayerMaalWinner[] = [];
   winner: string = "";
   pointsToAndFrom: string[] = [];
 
+  playerWinnings = new Map<string, number>();
+  totalWinnings = new Map<string, number>();
+  playersEntered: boolean = false;
+  totalHisab: string[] = [];
+  gamePoint: number = 1;
+  totalPlayers: number = 0;
 
-  public inputNumberOfPlayers(numberOfPlayers: string): void {
+
+  public inputNumberOfPlayers(numberOfPlayers: string, gamePoint: string): void {
     this.totalPlayers = Number(numberOfPlayers);
+    if (gamePoint == "") {
+      this.totalPlayers = 0;
+      alert("Enter game points. (Rupees per point)");
+    }
+    this.gamePoint = Number(gamePoint);
   }
 
   checkBoxChanged(winBoxNumber: number): void {
-    console.log("Called");
+    let winList: ElementRef[] = [this.win1, this.win2, this.win3, this.win4, this.win5, this.win6];
 
-    if (this.win1?.nativeElement.checked != undefined) {
-      this.win1.nativeElement.checked = false;
-    }
-    if (this.win2?.nativeElement.checked != undefined) {
-      this.win2.nativeElement.checked = false;
-    }
-    if (this.win3?.nativeElement.checked != undefined) {
-      this.win3.nativeElement.checked = false;
-    }
-    if (this.win4?.nativeElement.checked != undefined) {
-      this.win4.nativeElement.checked = false;
-    }
-    if (this.win5?.nativeElement.checked != undefined) {
-      this.win5.nativeElement.checked = false;
-    }
-    if (this.win6?.nativeElement.checked != undefined) {
-      this.win6.nativeElement.checked = false;
-    }
-
-    for (let i of [].constructor(this.totalPlayers)) {
-
-      if (winBoxNumber == 1 && this.win1?.nativeElement.checked == false) {
-        this.win1.nativeElement.checked = true;
-      }
-      if (winBoxNumber == 2 && this.win2?.nativeElement.checked == false) {
-        this.win2.nativeElement.checked = true;
-
-      }
-      if (winBoxNumber == 3 && this.win3?.nativeElement.checked == false) {
-        this.win3.nativeElement.checked = true;
-
-      }
-      if (winBoxNumber == 4 && this.win4?.nativeElement.checked == false) {
-        this.win4.nativeElement.checked = true;
-
-      }
-      if (winBoxNumber == 5 && this.win5?.nativeElement.checked == false) {
-        this.win5.nativeElement.checked = true;
-
-      }
-      if (winBoxNumber == 6 && this.win6?.nativeElement.checked == false) {
-        this.win6.nativeElement.checked = true;
-
+    for (let i = 0; i < this.totalPlayers; i++) {
+      if (i == winBoxNumber - 1) {
+        winList[i].nativeElement.checked = true;
+      } else {
+        winList[i].nativeElement.checked = false;
       }
     }
+
   }
 
   setPoints(): void {
+
+    let playerList: ElementRef[] = [this.player1, this.player2, this.player3, this.player4, this.player5, this.player6];
+    let maalList: ElementRef[] = [this.maal1, this.maal2, this.maal3, this.maal4, this.maal5, this.maal6];
+    let seenList: ElementRef[] = [this.seen1, this.seen2, this.seen3, this.seen4, this.seen5, this.seen6];
+    let dubleeList: ElementRef[] = [this.dublee1, this.dublee2, this.dublee3, this.dublee4, this.dublee5, this.dublee6];
+    let winList: ElementRef[] = [this.win1, this.win2, this.win3, this.win4, this.win5, this.win6];
+
+    let winnerSelected = false;
+    for (let i = 0; i < this.totalPlayers; i++) {
+      if (winList[i].nativeElement.checked) {
+        winnerSelected = true;
+      }
+    }
+    if (!winnerSelected) {
+      alert("Please select a winner.")
+      return;
+    }
     this.playerMaalWinner = [];
+    this.playerWinnings.clear();
+    this.totalHisab = [];
 
-    // if ((this.win1.nativeElement.checked != undefined && !this.win1.nativeElement.checked)!this.win1.nativeElement.checked )
-    // for (let i of [].constructor(this.totalPlayers)) {
 
-    // }
-
-    if (this.player1 != undefined && this.maal1 != undefined && this.win1 != undefined) {
-      this.playerMaalWinner.push(new PlayerMaalWinner(this.player1.nativeElement.value,
-        this.maal1.nativeElement.value == "" ? 0 : this.maal1.nativeElement.value,
-        this.seen1.nativeElement.checked == undefined ? false : this.seen1.nativeElement.checked,
-        this.dublee1.nativeElement.checked == undefined ? false : this.dublee1.nativeElement.checked,
-        this.win1.nativeElement.checked));
-    }
-    if (this.player2 != undefined && this.maal2 != undefined && this.win2 != undefined) {
-      this.playerMaalWinner.push(new PlayerMaalWinner(this.player2.nativeElement.value,
-        this.maal2.nativeElement.value == "" ? 0 : this.maal2.nativeElement.value,
-        this.seen2.nativeElement.checked == undefined ? false : this.seen2.nativeElement.checked,
-        this.dublee2.nativeElement.checked == undefined ? false : this.dublee2.nativeElement.checked,
-        this.win2.nativeElement.checked));
-    }
-    if (this.player3 != undefined && this.maal3 != undefined && this.win3 != undefined) {
-      this.playerMaalWinner.push(new PlayerMaalWinner(this.player3.nativeElement.value,
-        this.maal3.nativeElement.value == "" ? 0 : this.maal3.nativeElement.value,
-        this.seen3.nativeElement.checked == undefined ? false : this.seen3.nativeElement.checked,
-        this.dublee3.nativeElement.checked == undefined ? false : this.dublee3.nativeElement.checked,
-        this.win3.nativeElement.checked));
-    }
-    if (this.player4 != undefined && this.maal4 != undefined && this.win4 != undefined) {
-      this.playerMaalWinner.push(new PlayerMaalWinner(this.player4.nativeElement.value,
-        this.maal4.nativeElement.value == "" ? 0 : this.maal4.nativeElement.value,
-        this.seen4.nativeElement.checked == undefined ? false : this.seen4.nativeElement.checked,
-        this.dublee4.nativeElement.checked == undefined ? false : this.dublee4.nativeElement.checked,
-        this.win4.nativeElement.checked));
-    }
-    if (this.player5 != undefined && this.maal5 != undefined && this.win5 != undefined) {
-      this.playerMaalWinner.push(new PlayerMaalWinner(this.player5.nativeElement.value,
-        this.maal5.nativeElement.value == "" ? 0 : this.maal5.nativeElement.value,
-        this.seen5.nativeElement.checked == undefined ? false : this.seen5.nativeElement.checked,
-        this.dublee5.nativeElement.checked == undefined ? false : this.dublee5.nativeElement.checked,
-        this.win5.nativeElement.checked));
-    }
-    if (this.player6 != undefined && this.maal6 != undefined && this.win6 != undefined) {
-      this.playerMaalWinner.push(new PlayerMaalWinner(this.player1.nativeElement.value,
-        this.maal6.nativeElement.value == "" ? 0 : this.maal6.nativeElement.value,
-        this.seen6.nativeElement.checked == undefined ? false : this.seen6.nativeElement.checked,
-        this.dublee6.nativeElement.checked == undefined ? false : this.dublee6.nativeElement.checked,
-        this.win6.nativeElement.checked));
+    for (let i = 0; i < this.totalPlayers; i++) {
+      this.playerWinnings.set(playerList[i].nativeElement.value, 0);
+      this.playerMaalWinner.push(new PlayerMaalWinner(playerList[i].nativeElement.value,
+        maalList[i].nativeElement.value == "" ? 0 : maalList[i].nativeElement.value,
+        seenList[i].nativeElement.checked,
+        dubleeList[i].nativeElement.checked,
+        winList[i].nativeElement.checked));
     }
 
     console.log(this.playerMaalWinner);
     this.calculatePoints(this.playerMaalWinner);
+    this.updateWinnings();
+
+    for (let item of this.totalWinnings) {
+      if (item[1] >= 0) {
+        this.totalHisab.push(`${item[0]} ➡️  Rs.${item[1]}`);
+      }
+      else {
+        this.totalHisab.push(`${item[0]} ➡️  - Rs.${-(item[1])}`);
+      }
+    }
 
   }
 
@@ -176,124 +141,123 @@ export class InputComponent {
     for (let pmw of playerMaalWinner) {
 
       if (pmw.player != this.winner) {
+        let hisab: number = 0;
         if (pmw.seen && pmw.maal >= 0 && pmw.dublee) {
-          let hisab = (pmw.maal * playerMaalWinner.length) - totalMaal;
+          hisab = (pmw.maal * playerMaalWinner.length) - totalMaal;
           if (hisab > 0) {
-            this.pointsToAndFrom.push(`${this.winner} to ${pmw.player} ➡️ ${hisab}`);
+            this.pointsToAndFrom.push(`${this.winner} to ${pmw.player} ➡️ Rs.${hisab * this.gamePoint}`);
           }
           else if (hisab < 0) {
-            this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ ${hisab}`);
+            this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ Rs.${-(hisab * this.gamePoint)}`);
           }
           else {
-            this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ ${hisab}`);
+            this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ Rs.${hisab * this.gamePoint}`);
           }
         }
         else if (pmw.seen && pmw.maal > 0) {
-          let hisab = (pmw.maal * playerMaalWinner.length) - (totalMaal + 3);
+          hisab = (pmw.maal * playerMaalWinner.length) - (totalMaal + 3);
           if (hisab > 0) {
-            this.pointsToAndFrom.push(`${this.winner} to ${pmw.player} ➡️ ${hisab}`);
+            this.pointsToAndFrom.push(`${this.winner} to ${pmw.player} ➡️ Rs.${hisab * this.gamePoint}`);
           }
           else if (hisab < 0) {
-            this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ ${hisab}`);
+            this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ Rs.${-(hisab * this.gamePoint)}`);
           }
           else {
-            this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ ${hisab}`);
+            this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ Rs.${hisab * this.gamePoint}`);
           }
         }
 
         else if (!pmw.seen && (pmw.maal == -10 || pmw.maal == 0)) {
-          let hisab = -(totalMaal + 10);
-          this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ ${hisab}`);
+          hisab = -(totalMaal + 10);
+          this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ Rs.${-(hisab * this.gamePoint)}`);
         }
 
         else if (pmw.seen && pmw.maal == 0) {
-          let hisab = -(totalMaal + 3);
-          this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ ${hisab}`);
+          hisab = -(totalMaal + 3);
+          this.pointsToAndFrom.push(`${pmw.player} to ${this.winner} ➡️ Rs.${-(hisab * this.gamePoint)}`);
         }
+
+        this.playerWinnings.set(pmw.player, hisab * this.gamePoint);
+        let winnerPreviousWinnings = this.playerWinnings.get(this.winner);
+        this.playerWinnings.set(this.winner, -(hisab * this.gamePoint) + (winnerPreviousWinnings != undefined ? winnerPreviousWinnings : 0));
+
 
       }
     }
+
+    console.log("Player Winnings", this.playerWinnings);
+
 
   }
 
   seenDublee(seenBox: number): void {
-    if (seenBox == 1) {
-      if (this.seen1.nativeElement.checked != undefined) {
-        if (this.dublee1.nativeElement.checked != undefined) {
-          this.dublee1.nativeElement.disabled = !this.seen1.nativeElement.checked;
-        }
-      }
-    }
-    if (seenBox == 2) {
-      if (this.seen2.nativeElement.checked != undefined) {
-        if (this.dublee2.nativeElement.checked != undefined) {
-          this.dublee2.nativeElement.disabled = !this.seen2.nativeElement.checked;
-        }
-      }
-    }
-    if (seenBox == 3) {
-      if (this.seen3.nativeElement.checked != undefined) {
-        if (this.dublee3.nativeElement.checked != undefined) {
-          this.dublee3.nativeElement.disabled = !this.seen3.nativeElement.checked;
-        }
-      }
-    }
-    if (seenBox == 4) {
-      if (this.seen4.nativeElement.checked != undefined) {
-        if (this.dublee4.nativeElement.checked != undefined) {
-          this.dublee4.nativeElement.disabled = !this.seen4.nativeElement.checked;
-        }
-      }
-    }
-    if (seenBox == 5) {
-      if (this.seen5.nativeElement.checked != undefined) {
-        if (this.dublee5.nativeElement.checked != undefined) {
-          this.dublee5.nativeElement.disabled = !this.seen5.nativeElement.checked;
-        }
-      }
-    }
-    if (seenBox == 6) {
-      if (this.seen6.nativeElement.checked != undefined) {
-        if (this.dublee6.nativeElement.checked != undefined) {
-          this.dublee6.nativeElement.disabled = !this.seen6.nativeElement.checked;
-        }
-      }
-    }
+    let seenList: ElementRef[] = [this.seen1, this.seen2, this.seen3, this.seen4, this.seen5, this.seen6];
+    let dubleeList: ElementRef[] = [this.dublee1, this.dublee2, this.dublee3, this.dublee4, this.dublee5, this.dublee6];
+
+    dubleeList[seenBox - 1].nativeElement.disabled = !seenList[seenBox - 1].nativeElement.checked;
+
   }
 
   resetMaalSeen(): void {
+    let maalList: ElementRef[] = [this.maal1, this.maal2, this.maal3, this.maal4, this.maal5, this.maal6];
+    let seenList: ElementRef[] = [this.seen1, this.seen2, this.seen3, this.seen4, this.seen5, this.seen6];
+    let dubleeList: ElementRef[] = [this.dublee1, this.dublee2, this.dublee3, this.dublee4, this.dublee5, this.dublee6];
+    let winList: ElementRef[] = [this.win1, this.win2, this.win3, this.win4, this.win5, this.win6];
 
-    this.dublee1.nativeElement.checked = this.dublee1 != undefined ? false : undefined;
-    this.dublee1.nativeElement.disabled = this.dublee1 != undefined ? true : undefined;
-    this.seen1.nativeElement.checked = this.seen1 != undefined ? false : undefined;
-    this.maal1.nativeElement.value = this.maal1 != undefined ? "" : undefined;
-    this.win1.nativeElement.checked = this.win1 != undefined ? false : undefined;
-    this.dublee2.nativeElement.checked = this.dublee2 != undefined ? false : undefined;
-    this.dublee2.nativeElement.disabled = this.dublee2 != undefined ? true : undefined;
-    this.seen2.nativeElement.checked = this.seen2 != undefined ? false : undefined;
-    this.maal2.nativeElement.value = this.maal2 != undefined ? "" : undefined;
-    this.win2.nativeElement.checked = this.win1 != undefined ? false : undefined;
-    this.dublee3.nativeElement.checked = this.dublee3 != undefined ? false : undefined;
-    this.dublee3.nativeElement.disabled = this.dublee3 != undefined ? true : undefined;
-    this.seen3.nativeElement.checked = this.seen3 != undefined ? false : undefined;
-    this.maal3.nativeElement.value = this.maal3 != undefined ? "" : undefined;
-    this.win3.nativeElement.checked = this.win1 != undefined ? false : undefined;
-    this.dublee4.nativeElement.checked = this.dublee4 != undefined ? false : undefined;
-    this.dublee4.nativeElement.disabled = this.dublee4 != undefined ? true : undefined;
-    this.seen4.nativeElement.checked = this.seen4 != undefined ? false : undefined;
-    this.maal4.nativeElement.value = this.maal4 != undefined ? "" : undefined;
-    this.win4.nativeElement.checked = this.win1 != undefined ? false : undefined;
-    this.dublee5.nativeElement.checked = this.dublee5 != undefined ? false : undefined;
-    this.dublee5.nativeElement.disabled = this.dublee5 != undefined ? true : undefined;
-    this.seen5.nativeElement.checked = this.seen5 != undefined ? false : undefined;
-    this.maal5.nativeElement.value = this.maal5 != undefined ? "" : undefined;
-    this.win5.nativeElement.checked = this.win1 != undefined ? false : undefined;
-    this.dublee6.nativeElement.checked = this.dublee6 != undefined ? false : undefined;
-    this.dublee6.nativeElement.disabled = this.dublee6 != undefined ? true : undefined;
-    this.seen6.nativeElement.checked = this.seen6 != undefined ? false : undefined;
-    this.maal6.nativeElement.value = this.maal6 != undefined ? "" : undefined;
-    this.win6.nativeElement.checked = this.win1 != undefined ? false : undefined;
-    
+    for (let i = 0; i < this.totalPlayers; i++) {
+      dubleeList[i].nativeElement.checked = false;
+      dubleeList[i].nativeElement.disabled = true;
+      seenList[i].nativeElement.checked = false;
+      maalList[i].nativeElement.value = "";
+      winList[i].nativeElement.checked = false;
+
+    }
+  }
+
+  updateWinnings(): void {
+    if (this.playersEntered == false) {
+      for (let win of this.playerWinnings) {
+        this.totalWinnings.set(win[0], win[1]);
+      }
+      this.playersEntered = true;
+    }
+    else {
+      for (let winnings of this.playerWinnings.entries()) {
+        if (this.totalWinnings.has(winnings[0])) {
+          let previousWinnings = this.totalWinnings.get(winnings[0]);
+          let totalPoints = previousWinnings != undefined ? previousWinnings + winnings[1] : 0;
+          this.totalWinnings.set(winnings[0], totalPoints);
+        }
+        else {
+          this.totalWinnings.set(winnings[0], winnings[1]);
+        }
+      }
+    }
+    console.log("win this round: ", this.playerWinnings)
+    console.log("total wins: ", this.totalWinnings);
+
+
+  }
+
+  maalCheck(maal: string, maalBoxNumber: number): void {
+    let maalList: ElementRef[] = [this.maal1, this.maal2, this.maal3, this.maal4, this.maal5, this.maal6];
+    let dubleeList: ElementRef[] = [this.dublee1, this.dublee2, this.dublee3, this.dublee4, this.dublee5, this.dublee6];
+    let seenList: ElementRef[] = [this.seen1, this.seen2, this.seen3, this.seen4, this.seen5, this.seen6];
+    let winList: ElementRef[] = [this.win1, this.win2, this.win3, this.win4, this.win5, this.win6];
+
+    if (isNaN(+maal) || Number(maal) < 0) {
+      maalList[maalBoxNumber - 1].nativeElement.value = "";
+      seenList[maalBoxNumber - 1].nativeElement.checked = false;
+      dubleeList[maalBoxNumber - 1].nativeElement.checked = false;
+      dubleeList[maalBoxNumber - 1].nativeElement.disabled = true;
+      winList[maalBoxNumber - 1].nativeElement.checked = false;
+
+      alert("Invalid Maal !!!\nEnter a NUMBER greater than or equal to 0")
+    } else {
+      seenList[maalBoxNumber - 1].nativeElement.checked = true;
+      dubleeList[maalBoxNumber - 1].nativeElement.disabled = false;
+
+    }
   }
 
 }
