@@ -62,6 +62,10 @@ export class InputComponent {
       this.totalPlayers = 0;
       alert("Enter game points. (Rupees per point)");
     }
+    else if(Number(numberOfPlayers) <= 1){
+      alert("Number of players should be greater than 1.");
+      this.totalPlayers = 0;
+    }
     this.gamePoint = Number(gamePoint);
   }
 
@@ -254,7 +258,7 @@ export class InputComponent {
 
       alert("Invalid Maal !!!\nEnter a NUMBER greater than or equal to 0")
     } else {
-      seenList[maalBoxNumber - 1].nativeElement.checked = true;
+      seenList[maalBoxNumber - 1].nativeElement.checked = maalList[maalBoxNumber-1].nativeElement.value == "" ? false : true;
       dubleeList[maalBoxNumber - 1].nativeElement.disabled = false;
 
     }

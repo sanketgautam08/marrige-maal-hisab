@@ -3,7 +3,7 @@
   <div class="parent">
       <div class="card child" style="width: 18rem;">
         <div class="card-header">
-          Winner This Round: {{winner}}
+          <Span>Winner This Round: {{winner}}</Span>
         </div>
         <ul *ngFor="let point of allPoints" class="list-group list-group-flush">
           <li class="list-group-item">{{point}}</li>
@@ -11,7 +11,7 @@
       </div>
       <div class="card child" style="width: 18rem;">
         <div class="card-header">
-          Total Winnings
+          <span>Total Winnings</span>
         </div>
         <ul *ngFor="let hisab of totalHisab" class="list-group list-group-flush">
           <li class="list-group-item">{{hisab}}</li>
