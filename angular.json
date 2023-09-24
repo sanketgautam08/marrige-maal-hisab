@@ -68,7 +68,8 @@
               "browserTarget": "marrige-maal-hisab:build:production"
             },
             "development": {
-              "browserTarget": "marrige-maal-hisab:build:development"
+              "browserTarget": "marrige-maal-hisab:build:development",
+              "proxyConfig": "src/proxy.conf.js"
             }
           },
           "defaultConfiguration": "development"
