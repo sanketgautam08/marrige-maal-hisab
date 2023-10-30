@@ -11,5 +11,6 @@ export class PointsComponent {
   @Input() allPoints: string[] = [];
   @Input() winner: string = "";
   @Input() totalHisab: string[] = [];
+  @Input() totalNumberOfGames: number = 0;
 
 }

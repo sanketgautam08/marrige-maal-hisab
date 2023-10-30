@@ -145,12 +145,14 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>
+                    <button #undoButton type="button" class="btn btn-warning" (click)="setPoints(true)" disabled="true">Undo</button>
+                </td>
                 <td>
                     <button type="button" class="btn btn-danger" (click)="resetMaalSeen()">Reset</button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-success" (click)="setPoints()">Calculate</button>
+                    <button type="button" class="btn btn-success" (click)="setPoints(false)">Calculate</button>
                 </td>
             </tr>
         </tbody>
@@ -159,5 +161,5 @@
 </div>
 
 <div class="container" width="50%">
-    <app-points [allPoints]="pointsToAndFrom" [winner]="winner" [totalHisab]="totalHisab"></app-points>
+    <app-points [allPoints]="pointsToAndFrom" [winner]="winner" [totalHisab]="totalHisab" [totalNumberOfGames]="numberOfGames"></app-points>
 </div>

@@ -43,6 +43,8 @@ export class InputComponent {
   @ViewChild('maal5') maal5?: ElementRef["nativeElement"];
   @ViewChild('maal6') maal6?: ElementRef["nativeElement"];
 
+  @ViewChild('undoButton') undoButton?: ElementRef['nativeElement'];
+
 
   playerMaalWinner: PlayerMaalWinner[] = [];
   winner: string = "";
@@ -54,6 +56,7 @@ export class InputComponent {
   totalHisab: string[] = [];
   gamePoint: number = 1;
   totalPlayers: number = 0;
+  numberOfGames: number = 0;
 
 
   public inputNumberOfPlayers(numberOfPlayers: string, gamePoint: string): void {
@@ -82,7 +85,7 @@ export class InputComponent {
 
   }
 
-  setPoints(): void {
+  setPoints(isUndo: boolean): void {
 
     let playerList: ElementRef[] = [this.player1, this.player2, this.player3, this.player4, this.player5, this.player6];
     let maalList: ElementRef[] = [this.maal1, this.maal2, this.maal3, this.maal4, this.maal5, this.maal6];
@@ -114,9 +117,8 @@ export class InputComponent {
         winList[i].nativeElement.checked));
     }
 
-    console.log(this.playerMaalWinner);
     this.calculatePoints(this.playerMaalWinner);
-    this.updateWinnings();
+    this.updateWinnings(isUndo);
 
     for (let item of this.totalWinnings) {
       if (item[1] >= 0) {
@@ -218,25 +220,44 @@ export class InputComponent {
     }
   }
 
-  updateWinnings(): void {
-    if (this.playersEntered == false) {
-      for (let win of this.playerWinnings) {
-        this.totalWinnings.set(win[0], win[1]);
-      }
-      this.playersEntered = true;
-    }
-    else {
-      for (let winnings of this.playerWinnings.entries()) {
-        if (this.totalWinnings.has(winnings[0])) {
-          let previousWinnings = this.totalWinnings.get(winnings[0]);
-          let totalPoints = previousWinnings != undefined ? previousWinnings + winnings[1] : 0;
-          this.totalWinnings.set(winnings[0], totalPoints);
+  updateWinnings(isUndo: boolean): void {
+    if(!isUndo){
+      if (this.playersEntered == false) {
+        for (let win of this.playerWinnings) {
+          this.totalWinnings.set(win[0], win[1]);
         }
-        else {
-          this.totalWinnings.set(winnings[0], winnings[1]);
+        this.playersEntered = true;
+      }
+      else {
+        for (let winnings of this.playerWinnings.entries()) {
+          if (this.totalWinnings.has(winnings[0])) {
+            let previousWinnings = this.totalWinnings.get(winnings[0]);
+            let totalPoints = previousWinnings != undefined ? previousWinnings + winnings[1] : 0;
+            this.totalWinnings.set(winnings[0], totalPoints);
+          }
+          else {
+            this.totalWinnings.set(winnings[0], winnings[1]);
+          }
         }
       }
+      this.undoButton.nativeElement.disabled = false;
+      this.numberOfGames++;
+    }else{
+        for (let winnings of this.playerWinnings.entries()) {
+          if (this.totalWinnings.has(winnings[0])) {
+            let previousWinnings = this.totalWinnings.get(winnings[0]);
+            let totalPoints = previousWinnings != undefined ? previousWinnings + (-winnings[1]) : 0;
+            this.totalWinnings.set(winnings[0], totalPoints);
+          }
+          else {
+            this.totalWinnings.set(winnings[0], winnings[1]);
+          }
+        }
+        this.undoButton.nativeElement.disabled = true;
+        this.numberOfGames--;
+
     }
+    
     console.log("win this round: ", this.playerWinnings)
     console.log("total wins: ", this.totalWinnings);
 
